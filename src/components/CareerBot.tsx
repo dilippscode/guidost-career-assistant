@@ -1,20 +1,16 @@
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
-import { Send, User, Bot } from "lucide-react";
-
-interface Message {
-  id: number;
-  text: string;
-  sender: "user" | "bot";
-  timestamp: Date;
-}
+import { Send, User, Bot, Key } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { aiService, ChatMessage } from "@/services/aiService";
+import { toast } from "sonner";
 
 const CareerBot: React.FC = () => {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 1,
       text: "Hi there! I'm your Career Compass assistant. I can help you explore career paths, provide guidance on skills to develop, or answer questions about different professions. What would you like to know?",
@@ -23,11 +19,38 @@ const CareerBot: React.FC = () => {
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const handleSendMessage = () => {
+  useEffect(() => {
+    // Check if API key is already set
+    const savedApiKey = aiService.getApiKey();
+    if (!savedApiKey) {
+      setApiKeyDialogOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Scroll to bottom whenever messages change
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSaveApiKey = () => {
+    if (!apiKey.trim()) {
+      toast.error("Please enter a valid API key");
+      return;
+    }
+
+    aiService.setApiKey(apiKey.trim());
+    setApiKeyDialogOpen(false);
+    toast.success("API key saved successfully");
+  };
+
+  const handleSendMessage = async () => {
     if (input.trim() === "") return;
 
-    const newUserMessage: Message = {
+    const newUserMessage: ChatMessage = {
       id: messages.length + 1,
       text: input,
       sender: "user",
@@ -38,28 +61,26 @@ const CareerBot: React.FC = () => {
     setInput("");
     setIsTyping(true);
 
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponses = [
-        "Based on your interests in technology and problem-solving, you might want to explore careers in software development, data science, or UX design.",
-        "For someone with your academic background, I'd recommend looking into fields like business analytics, marketing technology, or product management.",
-        "To develop skills in this area, consider taking online courses in programming, data analysis, or design thinking. Platforms like Coursera and Udemy offer excellent resources.",
-        "The job outlook for this field is very positive, with an expected growth rate of 22% over the next decade according to recent industry reports.",
-        "Have you considered internships or project-based learning? These can be great ways to gain practical experience while exploring if this career path is right for you.",
-      ];
-
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
-
-      const newBotMessage: Message = {
+    try {
+      // Get API response
+      const aiResponse = await aiService.generateResponse([...messages, newUserMessage]);
+      
+      const newBotMessage: ChatMessage = {
         id: messages.length + 2,
-        text: randomResponse,
+        text: aiResponse,
         sender: "bot",
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, newBotMessage]);
+    } catch (error) {
+      // If error is about API key, open the dialog
+      if (error instanceof Error && error.message.includes("API key")) {
+        setApiKeyDialogOpen(true);
+      }
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -70,11 +91,21 @@ const CareerBot: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
-      <div className="bg-gradient-to-r from-guidost-600 to-mentor-600 p-4 text-white">
-        <h2 className="text-xl font-semibold">Career Compass Bot</h2>
-        <p className="text-white/80 text-sm">
-          Your AI-powered guide to career exploration and planning
-        </p>
+      <div className="bg-gradient-to-r from-guidost-600 to-mentor-600 p-4 text-white flex justify-between items-center">
+        <div>
+          <h2 className="text-xl font-semibold">Career Compass Bot</h2>
+          <p className="text-white/80 text-sm">
+            Your AI-powered guide to career exploration and planning
+          </p>
+        </div>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className="text-white hover:bg-white/20"
+          onClick={() => setApiKeyDialogOpen(true)}
+        >
+          <Key className="h-5 w-5" />
+        </Button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -122,6 +153,7 @@ const CareerBot: React.FC = () => {
             </div>
           </div>
         )}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className="p-4 border-t border-gray-200 bg-white">
@@ -136,12 +168,41 @@ const CareerBot: React.FC = () => {
           <Button
             onClick={handleSendMessage}
             className="gradient-button"
-            disabled={input.trim() === ""}
+            disabled={input.trim() === "" || isTyping}
           >
             <Send className="h-4 w-4" />
           </Button>
         </div>
       </div>
+
+      <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Set OpenAI API Key</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <Label htmlFor="apiKey" className="mb-2 block">
+              Enter your OpenAI API key to enable the AI-powered career bot
+            </Label>
+            <Input
+              id="apiKey"
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="sk-..."
+              className="mt-2"
+            />
+            <p className="text-sm text-muted-foreground mt-2">
+              Your API key is stored locally in your browser and never sent to our servers.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleSaveApiKey} className="gradient-button">
+              Save API Key
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
