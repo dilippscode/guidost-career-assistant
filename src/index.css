@@ -99,4 +99,56 @@
   .floating-card {
     @apply rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
   }
+
+  /* Roadmap Flow Styling */
+  .roadmap-node {
+    @apply font-medium p-3 rounded-lg border-2 border-guidost-100 bg-white shadow-sm;
+    min-width: 180px;
+  }
+
+  .roadmap-node.selected {
+    @apply border-guidost-500;
+  }
+
+  .roadmap-edge {
+    stroke: #6c8eef;
+    stroke-width: 2;
+  }
+
+  .roadmap-edge.selected {
+    stroke: #3b71fe;
+    stroke-width: 3;
+  }
+
+  .roadmap-flow .react-flow__node-input,
+  .roadmap-flow .react-flow__node-output,
+  .roadmap-flow .react-flow__node-default {
+    @apply font-medium p-3 rounded-lg border-2 border-guidost-100 bg-white shadow-sm;
+    min-width: 180px;
+  }
+
+  .roadmap-flow .react-flow__controls {
+    @apply bg-white border border-gray-200 shadow-sm;
+  }
+
+  .roadmap-flow .react-flow__controls-button {
+    @apply border-gray-200 hover:bg-guidost-50;
+  }
+
+  .roadmap-flow .react-flow__minimap {
+    @apply border border-gray-200 shadow-sm;
+  }
+
+  .roadmap-flow .react-flow__edge-path {
+    stroke: #6c8eef;
+    stroke-width: 2;
+  }
+
+  .roadmap-flow .react-flow__edge-text {
+    @apply text-xs font-medium fill-guidost-600 bg-white px-1;
+  }
+
+  .roadmap-flow .react-flow__edge-textbg {
+    @apply fill-white;
+  }
 }

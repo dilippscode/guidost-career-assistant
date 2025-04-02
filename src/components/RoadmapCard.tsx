@@ -11,6 +11,7 @@ interface RoadmapCardProps {
   path: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
+  onClick?: () => void;
 }
 
 const RoadmapCard: React.FC<RoadmapCardProps> = ({
@@ -20,6 +21,7 @@ const RoadmapCard: React.FC<RoadmapCardProps> = ({
   path,
   difficulty,
   duration,
+  onClick,
 }) => {
   const difficultyColor = {
     Beginner: "bg-green-100 text-green-700",
@@ -80,9 +82,19 @@ const RoadmapCard: React.FC<RoadmapCardProps> = ({
             <span className="text-sm text-gray-500">4.8 (120 reviews)</span>
           </div>
         </div>
-        <Link to={path}>
-          <Button className="w-full gradient-button">View Roadmap</Button>
-        </Link>
+        <div className="flex gap-2">
+          <Link to={path} className="flex-1">
+            <Button className="w-full gradient-button">View Roadmap</Button>
+          </Link>
+          {onClick && (
+            <Button 
+              className="bg-guidost-100 text-guidost-700 hover:bg-guidost-200" 
+              onClick={onClick}
+            >
+              View Flow
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );
