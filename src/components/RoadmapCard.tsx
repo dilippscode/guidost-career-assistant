@@ -12,6 +12,7 @@ interface RoadmapCardProps {
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   duration: string;
   onClick?: () => void;
+  id?: string;
 }
 
 const RoadmapCard: React.FC<RoadmapCardProps> = ({
@@ -22,6 +23,7 @@ const RoadmapCard: React.FC<RoadmapCardProps> = ({
   difficulty,
   duration,
   onClick,
+  id,
 }) => {
   const difficultyColor = {
     Beginner: "bg-green-100 text-green-700",

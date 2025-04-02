@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 210 50% 98%;
+    --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,35 +14,26 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 214 82% 51%;
+    --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 261 74% 64%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 261 74% 92%;
-    --accent-foreground: 261 74% 30%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --ring: 222.2 84% 4.9%;
 
-    --radius: 0.75rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 214 82% 51%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 261 74% 92%;
-    --sidebar-accent-foreground: 261 74% 30%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -55,7 +46,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -72,7 +63,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
 
@@ -80,75 +71,37 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-@layer components {
-  .gradient-heading {
-    @apply bg-gradient-to-r from-guidost-600 to-mentor-600 bg-clip-text text-transparent;
-  }
-  
-  .gradient-button {
-    @apply bg-gradient-to-r from-guidost-500 to-mentor-500 hover:from-guidost-600 hover:to-mentor-600 text-white transition-all;
-  }
-  
-  .floating-card {
-    @apply rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
-  }
+/* Guidost specific styles */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-guidost-500 to-guidost-700;
+}
 
-  /* Roadmap Flow Styling */
-  .roadmap-node {
-    @apply font-medium p-3 rounded-lg border-2 border-guidost-100 bg-white shadow-sm;
-    min-width: 180px;
-  }
+.gradient-button {
+  @apply bg-gradient-to-r from-guidost-500 to-guidost-700 hover:from-guidost-600 hover:to-guidost-800 text-white transition-all duration-300;
+}
 
-  .roadmap-node.selected {
-    @apply border-guidost-500;
-  }
+.gradient-heading {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-guidost-600 to-guidost-800;
+}
 
-  .roadmap-edge {
-    stroke: #6c8eef;
-    stroke-width: 2;
-  }
+.floating-card {
+  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+}
 
-  .roadmap-edge.selected {
-    stroke: #3b71fe;
-    stroke-width: 3;
-  }
+/* Roadmap Flow styles */
+.roadmap-node {
+  @apply bg-white border border-gray-200 rounded-md shadow-sm px-4 py-2 min-w-[120px] text-center;
+}
 
-  .roadmap-flow .react-flow__node-input,
-  .roadmap-flow .react-flow__node-output,
-  .roadmap-flow .react-flow__node-default {
-    @apply font-medium p-3 rounded-lg border-2 border-guidost-100 bg-white shadow-sm;
-    min-width: 180px;
-  }
+.roadmap-node-highlighted {
+  @apply bg-guidost-50 border-2 border-guidost-500 rounded-md shadow-md px-4 py-2 min-w-[120px] text-center;
+}
 
-  .roadmap-flow .react-flow__controls {
-    @apply bg-white border border-gray-200 shadow-sm;
-  }
-
-  .roadmap-flow .react-flow__controls-button {
-    @apply border-gray-200 hover:bg-guidost-50;
-  }
-
-  .roadmap-flow .react-flow__minimap {
-    @apply border border-gray-200 shadow-sm;
-  }
-
-  .roadmap-flow .react-flow__edge-path {
-    stroke: #6c8eef;
-    stroke-width: 2;
-  }
-
-  .roadmap-flow .react-flow__edge-text {
-    @apply text-xs font-medium fill-guidost-600 bg-white px-1;
-  }
-
-  .roadmap-flow .react-flow__edge-textbg {
-    @apply fill-white;
-  }
+.roadmap-edge {
+  @apply stroke-2 stroke-gray-400;
 }

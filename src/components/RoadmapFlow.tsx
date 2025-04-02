@@ -1,5 +1,5 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -14,7 +14,8 @@ import {
   MarkerType,
 } from '@xyflow/react';
 import { Card } from '@/components/ui/card';
-import { Book, BookOpen, ArrowRight } from 'lucide-react';
+import { Book, BookOpen, ArrowRight, PieChart } from 'lucide-react';
+import CourseQuiz from './CourseQuiz';
 
 import '@xyflow/react/dist/style.css';
 
@@ -23,6 +24,9 @@ interface RoadmapFlowProps {
 }
 
 const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
+  const [showQuiz, setShowQuiz] = useState(true);
+  const [userLevel, setUserLevel] = useState<string | null>(null);
+  
   // This is where we will store our course roadmap data
   const getRoadmapData = (id: string) => {
     // Define different roadmaps based on courseId
@@ -342,9 +346,89 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
+  
+  const handleQuizComplete = (score: number, level: string) => {
+    setShowQuiz(false);
+    setUserLevel(level);
+    
+    // Highlight the appropriate starting nodes based on the user's level
+    if (level === "Advanced") {
+      // For advanced users, highlight advanced nodes
+      setNodes((nds) => nds.map(node => {
+        if (node.id.includes('advanced') || node.type === 'output') {
+          return {
+            ...node,
+            className: 'roadmap-node-highlighted',
+            data: {
+              ...node.data,
+              label: node.data.label
+            }
+          };
+        }
+        return node;
+      }));
+    } else if (level === "Intermediate") {
+      // For intermediate users, highlight intermediate nodes
+      const intermediateNodes = ['js', 'python', 'react', 'node', 'machinelearning', 'datavis'];
+      setNodes((nds) => nds.map(node => {
+        if (intermediateNodes.includes(node.id)) {
+          return {
+            ...node,
+            className: 'roadmap-node-highlighted',
+            data: {
+              ...node.data,
+              label: node.data.label
+            }
+          };
+        }
+        return node;
+      }));
+    } else {
+      // For beginners, highlight the starting node
+      setNodes((nds) => nds.map(node => {
+        if (node.type === 'input') {
+          return {
+            ...node,
+            className: 'roadmap-node-highlighted',
+            data: {
+              ...node.data,
+              label: node.data.label
+            }
+          };
+        }
+        return node;
+      }));
+    }
+  };
+  
+  const handleSkipQuiz = () => {
+    setShowQuiz(false);
+  };
+
+  if (showQuiz) {
+    return (
+      <Card className="w-full mt-6 overflow-hidden">
+        <div className="p-4">
+          <CourseQuiz 
+            courseId={courseId} 
+            onComplete={handleQuizComplete}
+            onSkip={handleSkipQuiz}
+          />
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card className="w-full h-[500px] mt-6 overflow-hidden">
+      {userLevel && (
+        <div className="bg-gray-50 p-3 border-b flex items-center gap-2">
+          <PieChart size={18} className="text-guidost-500" />
+          <span className="text-sm font-medium">
+            Based on your knowledge, we've highlighted the <span className="text-guidost-600">{userLevel}</span> level content for you
+          </span>
+        </div>
+      )}
       <ReactFlow
         nodes={nodes}
         edges={edges}

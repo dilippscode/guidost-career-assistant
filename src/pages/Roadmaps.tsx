@@ -37,6 +37,7 @@ const Roadmaps = () => {
       field: "Technology",
     },
     {
+      id: "ux-ui-design",
       title: "UX/UI Design",
       description: "Learn to design user-friendly interfaces and create exceptional user experiences.",
       image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -46,6 +47,7 @@ const Roadmaps = () => {
       field: "Design",
     },
     {
+      id: "digital-marketing",
       title: "Digital Marketing",
       description: "Master social media, SEO, content marketing, and analytics to drive online growth.",
       image: "https://images.unsplash.com/photo-1533750349088-cd871a92f7e4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -55,6 +57,7 @@ const Roadmaps = () => {
       field: "Marketing",
     },
     {
+      id: "mobile-development",
       title: "Mobile App Development",
       description: "Learn to build native and cross-platform mobile applications for iOS and Android.",
       image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -64,6 +67,7 @@ const Roadmaps = () => {
       field: "Technology",
     },
     {
+      id: "cloud-computing",
       title: "Cloud Computing",
       description: "Master cloud platforms, infrastructure, and deployment strategies for modern applications.",
       image: "https://images.unsplash.com/photo-1508345228704-935cc84bf5e2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -73,6 +77,7 @@ const Roadmaps = () => {
       field: "Technology",
     },
     {
+      id: "financial-analysis",
       title: "Financial Analysis",
       description: "Learn financial modeling, valuation, and analysis techniques for business decision-making.",
       image: "https://images.unsplash.com/photo-1579170053380-58828edb5e16?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -82,6 +87,7 @@ const Roadmaps = () => {
       field: "Finance",
     },
     {
+      id: "graphic-design",
       title: "Graphic Design",
       description: "Master visual communication through typography, imagery, color, and layout principles.",
       image: "https://images.unsplash.com/photo-1619616713221-a511d7037672?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -91,6 +97,7 @@ const Roadmaps = () => {
       field: "Design",
     },
     {
+      id: "product-management",
       title: "Product Management",
       description: "Learn to lead product development from ideation to launch and ongoing improvement.",
       image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80",
@@ -171,6 +178,7 @@ const Roadmaps = () => {
                   {filteredRoadmaps.map((roadmap) => (
                     <RoadmapCard
                       key={roadmap.id}
+                      id={roadmap.id}
                       title={roadmap.title}
                       description={roadmap.description}
                       image={roadmap.image}
