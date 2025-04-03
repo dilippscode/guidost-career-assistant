@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isProduction = window.location.hostname !== "localhost" && 
                        !window.location.hostname.includes(".lovable.app");
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -53,10 +54,19 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="border-guidost-500 text-guidost-600 hover:bg-guidost-50">
+            <Button 
+              variant="outline" 
+              className="border-guidost-500 text-guidost-600 hover:bg-guidost-50"
+              onClick={() => navigate("/login")}
+            >
               Sign In
             </Button>
-            <Button className="gradient-button">Sign Up</Button>
+            <Button 
+              className="gradient-button"
+              onClick={() => navigate("/signup")}
+            >
+              Sign Up
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -92,10 +102,25 @@ const Navbar = () => {
                 Contact
               </Link>
               <div className="pt-2 flex flex-col space-y-3">
-                <Button variant="outline" className="border-guidost-500 text-guidost-600 hover:bg-guidost-50 w-full">
+                <Button 
+                  variant="outline" 
+                  className="border-guidost-500 text-guidost-600 hover:bg-guidost-50 w-full"
+                  onClick={() => {
+                    toggleMenu();
+                    navigate("/login");
+                  }}
+                >
                   Sign In
                 </Button>
-                <Button className="gradient-button w-full">Sign Up</Button>
+                <Button 
+                  className="gradient-button w-full"
+                  onClick={() => {
+                    toggleMenu();
+                    navigate("/signup");
+                  }}
+                >
+                  Sign Up
+                </Button>
               </div>
             </div>
           </div>

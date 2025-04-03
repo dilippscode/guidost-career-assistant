@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import CareerCompass from "./pages/CareerCompass";
 import Roadmaps from "./pages/Roadmaps";
 import Mentorship from "./pages/Mentorship";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/career-compass" element={<CareerCompass />} />
           <Route path="/roadmaps" element={<Roadmaps />} />
           <Route path="/mentorship" element={<Mentorship />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
