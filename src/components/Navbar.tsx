@@ -6,6 +6,8 @@ import { Menu, X, ChevronDown } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isProduction = window.location.hostname !== "localhost" && 
+                       !window.location.hostname.includes(".lovable.app");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -16,7 +18,9 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold gradient-heading">GuiDost</span>
+            {!isProduction && (
+              <span className="text-2xl font-bold gradient-heading">GuiDost</span>
+            )}
           </Link>
 
           {/* Desktop Navigation */}
