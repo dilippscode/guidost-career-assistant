@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,7 @@ interface Message {
 
 const INITIAL_MESSAGE: Message = {
   id: 1,
-  text: "Hi there! I'm GuiDost Assistant. How can I help you today?",
+  text: "Hi there! I'm GuiDost Assistant. How can I help you today? (This is a simulated chat - for AI-powered responses, try the Career Compass page)",
   sender: "bot",
   timestamp: new Date(),
 };
@@ -26,7 +25,6 @@ const ChatbotAssistant: React.FC = () => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom of chat when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -34,7 +32,6 @@ const ChatbotAssistant: React.FC = () => {
   const handleSendMessage = async () => {
     if (input.trim() === "") return;
 
-    // Add user message
     const userMessage: Message = {
       id: messages.length + 1,
       text: input,
@@ -46,7 +43,6 @@ const ChatbotAssistant: React.FC = () => {
     setInput("");
     setIsTyping(true);
 
-    // Simulate bot thinking
     setTimeout(() => {
       const botResponse = generateBotResponse(input.trim());
       
@@ -65,7 +61,6 @@ const ChatbotAssistant: React.FC = () => {
   const generateBotResponse = (userInput: string): string => {
     const lowercaseInput = userInput.toLowerCase();
     
-    // Simple keyword matching for responses
     if (lowercaseInput.includes("hello") || lowercaseInput.includes("hi")) {
       return "Hello! How can I help you with your career guidance today?";
     } else if (lowercaseInput.includes("mentor") || lowercaseInput.includes("mentorship")) {
@@ -93,7 +88,6 @@ const ChatbotAssistant: React.FC = () => {
 
   return (
     <>
-      {/* Chat Button */}
       <Button
         onClick={() => setIsOpen(true)}
         className="fixed bottom-4 right-4 h-12 w-12 rounded-full bg-guidost-600 hover:bg-guidost-700 shadow-lg z-50"
@@ -102,10 +96,8 @@ const ChatbotAssistant: React.FC = () => {
         <MessageSquare className="h-6 w-6 text-white" />
       </Button>
 
-      {/* Chat Window */}
       {isOpen && (
         <div className="fixed bottom-20 right-4 w-80 sm:w-96 h-96 bg-white rounded-lg shadow-xl z-50 flex flex-col border border-gray-200 overflow-hidden">
-          {/* Header */}
           <div className="bg-gradient-to-r from-guidost-600 to-guidost-700 text-white p-3 flex justify-between items-center">
             <div className="flex items-center">
               <Bot className="h-5 w-5 mr-2" />
@@ -121,7 +113,6 @@ const ChatbotAssistant: React.FC = () => {
             </Button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 p-3 overflow-y-auto bg-gray-50">
             <div className="space-y-3">
               {messages.map((message) => (
@@ -163,7 +154,6 @@ const ChatbotAssistant: React.FC = () => {
             </div>
           </div>
 
-          {/* Input */}
           <div className="p-3 border-t border-gray-200 bg-white">
             <div className="flex space-x-2">
               <Input

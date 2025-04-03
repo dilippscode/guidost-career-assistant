@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,15 +23,15 @@ const CareerBot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if API key is already set
     const savedApiKey = aiService.getApiKey();
     if (!savedApiKey) {
       setApiKeyDialogOpen(true);
+    } else {
+      setApiKey(savedApiKey);
     }
   }, []);
 
   useEffect(() => {
-    // Scroll to bottom whenever messages change
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -45,6 +44,10 @@ const CareerBot: React.FC = () => {
     aiService.setApiKey(apiKey.trim());
     setApiKeyDialogOpen(false);
     toast.success("API key saved successfully");
+  };
+
+  const handleChangeApiKey = () => {
+    setApiKeyDialogOpen(true);
   };
 
   const handleSendMessage = async () => {
@@ -62,7 +65,6 @@ const CareerBot: React.FC = () => {
     setIsTyping(true);
 
     try {
-      // Get API response
       const aiResponse = await aiService.generateResponse([...messages, newUserMessage]);
       
       const newBotMessage: ChatMessage = {
@@ -74,7 +76,6 @@ const CareerBot: React.FC = () => {
 
       setMessages((prev) => [...prev, newBotMessage]);
     } catch (error) {
-      // If error is about API key, open the dialog
       if (error instanceof Error && error.message.includes("API key")) {
         setApiKeyDialogOpen(true);
       }
@@ -102,7 +103,8 @@ const CareerBot: React.FC = () => {
           variant="ghost" 
           size="icon" 
           className="text-white hover:bg-white/20"
-          onClick={() => setApiKeyDialogOpen(true)}
+          onClick={handleChangeApiKey}
+          title="Change API Key"
         >
           <Key className="h-5 w-5" />
         </Button>
@@ -156,7 +158,6 @@ const CareerBot: React.FC = () => {
         <div ref={messagesEndRef} />
       </div>
       
-      {/* Contact Information */}
       <div className="bg-white p-3 border-t border-gray-200">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-gray-600">
           <div className="flex items-center mb-2 sm:mb-0">
@@ -196,7 +197,7 @@ const CareerBot: React.FC = () => {
       <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Set OpenAI API Key</DialogTitle>
+            <DialogTitle>OpenAI API Key</DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <Label htmlFor="apiKey" className="mb-2 block">
@@ -213,8 +214,25 @@ const CareerBot: React.FC = () => {
             <p className="text-sm text-muted-foreground mt-2">
               Your API key is stored locally in your browser and never sent to our servers.
             </p>
+            <p className="text-xs text-guidost-600 mt-1">
+              <a 
+                href="https://platform.openai.com/api-keys" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="underline hover:text-guidost-700"
+              >
+                Get an API key from OpenAI
+              </a>
+            </p>
           </div>
           <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setApiKeyDialogOpen(false)}
+              className="mr-2"
+            >
+              Cancel
+            </Button>
             <Button onClick={handleSaveApiKey} className="gradient-button">
               Save API Key
             </Button>

@@ -22,6 +22,7 @@ class AIService {
   setApiKey(key: string) {
     this.apiKey = key;
     localStorage.setItem("ai_api_key", key);
+    return key;
   }
 
   getApiKey(): string | null {
@@ -29,6 +30,11 @@ class AIService {
       this.apiKey = localStorage.getItem("ai_api_key");
     }
     return this.apiKey;
+  }
+
+  clearApiKey() {
+    this.apiKey = null;
+    localStorage.removeItem("ai_api_key");
   }
 
   async generateResponse(conversationHistory: ChatMessage[]): Promise<string> {
@@ -67,7 +73,14 @@ class AIService {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error?.message || "Failed to generate response");
+        const errorMessage = errorData.error?.message || "Failed to generate response";
+        
+        // If the error is related to the API key, clear it
+        if (errorMessage.includes("API key") || errorMessage.includes("authentication")) {
+          this.clearApiKey();
+        }
+        
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
