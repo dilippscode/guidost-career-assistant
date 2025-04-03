@@ -12,7 +12,7 @@ interface Message {
   timestamp: Date;
 }
 
-const INITIAL_MESSAGE = {
+const INITIAL_MESSAGE: Message = {
   id: 1,
   text: "Hi there! I'm GuiDost Assistant. How can I help you today?",
   sender: "bot",
