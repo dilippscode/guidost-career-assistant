@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,16 +20,19 @@ const CareerBot: React.FC = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  const [apiKey, setApiKey] = useState(aiService.getApiKey() || "sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const savedApiKey = aiService.getApiKey();
-    if (!savedApiKey) {
-      setApiKeyDialogOpen(true);
+    // If API key isn't set in the service, set it with the default one
+    if (!aiService.getApiKey()) {
+      aiService.setApiKey("sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
+      setApiKey("sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
     } else {
-      setApiKey(savedApiKey);
+      setApiKey(aiService.getApiKey() || "");
     }
+    // We no longer need to show the API key dialog by default
+    setApiKeyDialogOpen(false);
   }, []);
 
   useEffect(() => {
