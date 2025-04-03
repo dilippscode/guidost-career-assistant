@@ -1,8 +1,8 @@
 
 import React from "react";
-import AuthForm from "@/components/AuthForm";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import AuthForm from "@/components/AuthForm";
 
 const Login = () => {
   return (
