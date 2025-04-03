@@ -9,7 +9,108 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      mentors: {
+        Row: {
+          company: string | null
+          created_at: string
+          expertise: string[]
+          field: string
+          id: string
+          image: string | null
+          name: string
+          position: string | null
+          rating: number | null
+          session_price: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          expertise: string[]
+          field: string
+          id?: string
+          image?: string | null
+          name: string
+          position?: string | null
+          rating?: number | null
+          session_price?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          expertise?: string[]
+          field?: string
+          id?: string
+          image?: string | null
+          name?: string
+          position?: string | null
+          rating?: number | null
+          session_price?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      roadmaps: {
+        Row: {
+          created_at: string
+          description: string | null
+          field: string
+          id: string
+          image_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          field: string
+          id?: string
+          image_url?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          field?: string
+          id?: string
+          image_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

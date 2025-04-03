@@ -16,6 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { LogIn, User, Key } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
@@ -63,22 +64,25 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const onLoginSubmit = async (values: LoginFormValues) => {
     setIsLoading(true);
     try {
-      // Simulate login - this would be replaced with actual authentication
-      console.log("Login values:", values);
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
       
-      // Simulate a short delay for the "login" process
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      if (error) {
+        throw error;
+      }
+
       toast({
         title: "Login successful",
         description: "Welcome back to GuiDost!",
       });
       
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Login failed",
-        description: "Please check your credentials and try again.",
+        description: error.message || "Please check your credentials and try again.",
         variant: "destructive",
       });
     } finally {
@@ -89,22 +93,30 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const onSignupSubmit = async (values: SignupFormValues) => {
     setIsLoading(true);
     try {
-      // Simulate signup - this would be replaced with actual authentication
-      console.log("Signup values:", values);
+      const { data, error } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        options: {
+          data: {
+            name: values.name,
+          }
+        }
+      });
       
-      // Simulate a short delay for the "signup" process
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      if (error) {
+        throw error;
+      }
+
       toast({
         title: "Account created",
-        description: "Your account has been created successfully!",
+        description: "Your account has been created successfully! Please check your email for verification.",
       });
       
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Signup failed",
-        description: "Please check your information and try again.",
+        description: error.message || "Please check your information and try again.",
         variant: "destructive",
       });
     } finally {
