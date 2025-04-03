@@ -15,19 +15,17 @@ export const useCareerBot = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
-  const [apiKey, setApiKey] = useState(aiService.getApiKey() || "sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
+  const [apiKey, setApiKey] = useState(aiService.getApiKey() || "");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // If API key isn't set in the service, set it with the default one
-    if (!aiService.getApiKey()) {
-      aiService.setApiKey("sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
-      setApiKey("sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop");
+    // Check if API key exists
+    const savedApiKey = aiService.getApiKey();
+    if (!savedApiKey) {
+      setApiKeyDialogOpen(true);
     } else {
-      setApiKey(aiService.getApiKey() || "");
+      setApiKey(savedApiKey);
     }
-    // We no longer need to show the API key dialog by default
-    setApiKeyDialogOpen(false);
   }, []);
 
   useEffect(() => {

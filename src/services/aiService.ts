@@ -17,7 +17,7 @@ export interface ChatRequest {
 }
 
 class AIService {
-  private apiKey: string | null = "sk-ijklmnopqrstuvwxijklmnopqrstuvwxijklmnop";
+  private apiKey: string | null = null;
 
   setApiKey(key: string) {
     this.apiKey = key;
