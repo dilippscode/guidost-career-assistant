@@ -1,4 +1,3 @@
-
 import React, { useCallback, useState } from 'react';
 import {
   ReactFlow,
@@ -14,8 +13,11 @@ import {
   MarkerType,
 } from '@xyflow/react';
 import { Card } from '@/components/ui/card';
-import { Book, BookOpen, ArrowRight, PieChart } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Book, BookOpen, ArrowRight, PieChart, BarChart, LineChart } from 'lucide-react';
 import CourseQuiz from './CourseQuiz';
+import SkillDistributionChart from './SkillDistributionChart';
+import CourseTimelineChart from './CourseTimelineChart';
 
 import '@xyflow/react/dist/style.css';
 
@@ -26,10 +28,9 @@ interface RoadmapFlowProps {
 const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
   const [showQuiz, setShowQuiz] = useState(true);
   const [userLevel, setUserLevel] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("roadmap");
   
-  // This is where we will store our course roadmap data
   const getRoadmapData = (id: string) => {
-    // Define different roadmaps based on courseId
     const roadmaps: Record<string, { nodes: Node[], edges: Edge[] }> = {
       'web-development': {
         nodes: [
@@ -1559,7 +1560,6 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
       },
     };
 
-    // Return the requested roadmap or a default one if not found
     return roadmaps[id] || roadmaps['web-development'];
   };
 
@@ -1576,9 +1576,7 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
     setShowQuiz(false);
     setUserLevel(level);
     
-    // Highlight the appropriate starting nodes based on the user's level
     if (level === "Advanced") {
-      // For advanced users, highlight advanced nodes
       setNodes((nds) => nds.map(node => {
         if (node.id.includes('advanced') || node.type === 'output') {
           return {
@@ -1593,7 +1591,6 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
         return node;
       }));
     } else if (level === "Intermediate") {
-      // For intermediate users, highlight intermediate nodes
       const intermediateNodes = ['js', 'python', 'react', 'node', 'machinelearning', 'datavis'];
       setNodes((nds) => nds.map(node => {
         if (intermediateNodes.includes(node.id)) {
@@ -1609,7 +1606,6 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
         return node;
       }));
     } else {
-      // For beginners, highlight the starting node
       setNodes((nds) => nds.map(node => {
         if (node.type === 'input') {
           return {
@@ -1645,7 +1641,7 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
   }
 
   return (
-    <Card className="w-full h-[500px] mt-6 overflow-hidden">
+    <Card className="w-full mt-6 overflow-hidden">
       {userLevel && (
         <div className="bg-gray-50 p-3 border-b flex items-center gap-2">
           <PieChart size={18} className="text-guidost-500" />
@@ -1654,25 +1650,67 @@ const RoadmapFlow: React.FC<RoadmapFlowProps> = ({ courseId }) => {
           </span>
         </div>
       )}
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        fitView
-        className="roadmap-flow"
-      >
-        <Controls />
-        <MiniMap />
-        <Background color="#f8f8f8" gap={16} />
-        <Panel position="top-left" className="bg-white p-2 rounded shadow-sm border">
-          <div className="text-sm font-medium text-gray-700 flex items-center gap-2">
-            <ArrowRight size={16} className="text-guidost-500" />
-            <span>Interactive Course Roadmap</span>
+
+      <Tabs defaultValue="roadmap" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="flex justify-center p-2 border-b">
+          <TabsList>
+            <TabsTrigger value="roadmap" className="flex items-center gap-1">
+              <LineChart size={16} />
+              <span>Roadmap</span>
+            </TabsTrigger>
+            <TabsTrigger value="skills" className="flex items-center gap-1">
+              <PieChart size={16} />
+              <span>Skills</span>
+            </TabsTrigger>
+            <TabsTrigger value="timeline" className="flex items-center gap-1">
+              <BarChart size={16} />
+              <span>Timeline</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        <TabsContent value="roadmap" className="h-[450px] mt-0">
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            fitView
+            className="roadmap-flow"
+          >
+            <Controls />
+            <MiniMap />
+            <Background color="#f8f8f8" gap={16} />
+            <Panel position="top-left" className="bg-white p-2 rounded shadow-sm border">
+              <div className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                <ArrowRight size={16} className="text-guidost-500" />
+                <span>Interactive Course Roadmap</span>
+              </div>
+            </Panel>
+          </ReactFlow>
+        </TabsContent>
+        
+        <TabsContent value="skills" className="mt-0 p-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-medium mb-2">Skill Distribution</h3>
+            <p className="text-gray-600 text-sm mb-4">
+              This chart shows the distribution of skills you'll learn in this course and their relative importance.
+            </p>
+            <SkillDistributionChart courseId={courseId} />
           </div>
-        </Panel>
-      </ReactFlow>
+        </TabsContent>
+        
+        <TabsContent value="timeline" className="mt-0 p-4">
+          <div className="mb-4">
+            <h3 className="text-lg font-medium mb-2">Course Timeline</h3>
+            <p className="text-gray-600 text-sm mb-4">
+              This chart shows the estimated time (in weeks) spent on each phase of the course.
+            </p>
+            <CourseTimelineChart courseId={courseId} />
+          </div>
+        </TabsContent>
+      </Tabs>
     </Card>
   );
 };

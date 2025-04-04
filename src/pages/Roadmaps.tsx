@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, ChevronDown, BookOpen } from "lucide-react";
+import { Search, ChevronDown, BookOpen, LineChart, PieChart, BarChart } from "lucide-react";
 
 const Roadmaps = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -133,9 +132,25 @@ const Roadmaps = () => {
             <h1 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading">
               Career & Course Roadmaps
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-gray-600 mb-4">
               Explore detailed, step-by-step learning paths for various career fields. Each roadmap includes curated resources, skill milestones, and expert guidance.
             </p>
+            <div className="flex justify-center gap-2 items-center text-sm text-gray-600">
+              <div className="flex items-center gap-1">
+                <LineChart size={16} className="text-guidost-500" />
+                <span>Interactive Roadmaps</span>
+              </div>
+              <div className="w-1 h-1 rounded-full bg-gray-300"></div>
+              <div className="flex items-center gap-1">
+                <PieChart size={16} className="text-guidost-500" />
+                <span>Skill Distribution</span>
+              </div>
+              <div className="w-1 h-1 rounded-full bg-gray-300"></div>
+              <div className="flex items-center gap-1">
+                <BarChart size={16} className="text-guidost-500" />
+                <span>Timeline Charts</span>
+              </div>
+            </div>
           </div>
           
           <Tabs defaultValue="grid" className="mb-8">
@@ -201,13 +216,13 @@ const Roadmaps = () => {
             </TabsContent>
             
             <TabsContent value="flow">
-              <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-                <div className="flex items-center gap-2 mb-4">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
+                <div className="flex items-center gap-2 mb-4 p-4 border-b">
                   <BookOpen className="text-guidost-500" size={20} />
-                  <h2 className="text-xl font-semibold text-gray-800">Select a roadmap to view its flow</h2>
+                  <h2 className="text-xl font-semibold text-gray-800">Interactive Course Roadmaps & Charts</h2>
                 </div>
                 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 mb-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 px-4 py-3">
                   {roadmaps.slice(0, 6).map((roadmap) => (
                     <Button 
                       key={roadmap.id} 
@@ -222,10 +237,9 @@ const Roadmaps = () => {
                 
                 <RoadmapFlow courseId={selectedRoadmap} />
                 
-                <div className="mt-4 text-sm text-gray-500">
+                <div className="mt-4 text-sm text-gray-500 p-4 border-t">
                   <p>
-                    <strong>Note:</strong> This interactive diagram shows the recommended learning path. 
-                    You can drag nodes, zoom in/out, and click on connections to explore different pathways.
+                    <strong>Note:</strong> Switch between different chart types using the tabs. You can drag nodes, zoom in/out, and click on connections in the roadmap view.
                   </p>
                 </div>
               </div>
