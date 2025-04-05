@@ -32,6 +32,33 @@ const ApiKeyDialog: React.FC<ApiKeyDialogProps> = ({
   setProvider,
   handleSaveApiKey
 }) => {
+  const getApiKeyPlaceholder = () => {
+    switch (provider) {
+      case "openai": return "sk-...";
+      case "gemini": return "AI...";
+      case "google": return "AIza...";
+      default: return "Enter API key";
+    }
+  };
+
+  const getApiKeyLink = () => {
+    switch (provider) {
+      case "openai": return "https://platform.openai.com/api-keys";
+      case "gemini": return "https://aistudio.google.com/app/apikey";
+      case "google": return "https://console.cloud.google.com/apis/credentials";
+      default: return "#";
+    }
+  };
+
+  const getProviderDisplayName = () => {
+    switch (provider) {
+      case "openai": return "OpenAI";
+      case "gemini": return "Google Gemini";
+      case "google": return "Google AI";
+      default: return provider;
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
@@ -50,20 +77,21 @@ const ApiKeyDialog: React.FC<ApiKeyDialogProps> = ({
               <SelectContent>
                 <SelectItem value="openai">OpenAI (GPT)</SelectItem>
                 <SelectItem value="gemini">Google Gemini</SelectItem>
+                <SelectItem value="google">Google AI</SelectItem>
               </SelectContent>
             </Select>
           </div>
           
           <div>
             <Label htmlFor="apiKey" className="mb-2 block">
-              Enter your {provider === "openai" ? "OpenAI" : "Gemini"} API key
+              Enter your {getProviderDisplayName()} API key
             </Label>
             <Input
               id="apiKey"
               type="password"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
-              placeholder={provider === "openai" ? "sk-..." : "AI..."}
+              placeholder={getApiKeyPlaceholder()}
               className="mt-2"
             />
             <p className="text-sm text-muted-foreground mt-2">
@@ -71,14 +99,12 @@ const ApiKeyDialog: React.FC<ApiKeyDialogProps> = ({
             </p>
             <p className="text-xs text-guidost-600 mt-1">
               <a 
-                href={provider === "openai" 
-                  ? "https://platform.openai.com/api-keys" 
-                  : "https://aistudio.google.com/app/apikey"} 
+                href={getApiKeyLink()} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="underline hover:text-guidost-700"
               >
-                Get an API key from {provider === "openai" ? "OpenAI" : "Google AI Studio"}
+                Get an API key from {getProviderDisplayName()}
               </a>
             </p>
           </div>

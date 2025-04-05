@@ -9,7 +9,7 @@ export interface ChatMessage {
   timestamp: Date;
 }
 
-export type AIProvider = "openai" | "gemini";
+export type AIProvider = "openai" | "gemini" | "google";
 
 class AIService {
   private apiKey: string | null = null;
@@ -41,8 +41,8 @@ class AIService {
 
   getProvider(): AIProvider {
     const savedProvider = localStorage.getItem("ai_provider");
-    if (savedProvider && (savedProvider === "openai" || savedProvider === "gemini")) {
-      this.provider = savedProvider;
+    if (savedProvider && (savedProvider === "openai" || savedProvider === "gemini" || savedProvider === "google")) {
+      this.provider = savedProvider as AIProvider;
     }
     return this.provider;
   }
@@ -61,6 +61,8 @@ class AIService {
         return await this.generateOpenAIResponse(conversationHistory, apiKey);
       } else if (provider === "gemini") {
         return await this.generateGeminiResponse(conversationHistory, apiKey);
+      } else if (provider === "google") {
+        return await this.generateGoogleAIResponse(conversationHistory, apiKey);
       } else {
         throw new Error("Invalid AI provider selected.");
       }
@@ -166,6 +168,54 @@ class AIService {
     }
     
     return data.candidates[0].content.parts[0].text;
+  }
+
+  private async generateGoogleAIResponse(conversationHistory: ChatMessage[], apiKey: string): Promise<string> {
+    // Format messages for Google AI API
+    const messages = conversationHistory.map(msg => ({
+      role: msg.sender === "user" ? "user" : "assistant",
+      content: msg.text
+    }));
+
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/chat-bison-001:generateMessage?key=${apiKey}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          prompt: {
+            context: "You are CareerCompass, an AI career guidance assistant. You help students and professionals with career advice, skill development suggestions, and education pathways. Provide concise, personalized advice.",
+            messages: messages
+          },
+          temperature: 0.7,
+          candidateCount: 1,
+          topP: 0.95,
+          topK: 40
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        const errorMessage = errorData.error?.message || "Failed to generate response from Google AI";
+        
+        if (errorMessage.includes("API key") || errorMessage.includes("authentication")) {
+          this.clearApiKey();
+        }
+        
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      if (!data.candidates || data.candidates.length === 0) {
+        throw new Error("No response generated from Google AI");
+      }
+      
+      return data.candidates[0].content;
+    } catch (error) {
+      console.error("Error with Google AI API:", error);
+      throw new Error(error instanceof Error ? error.message : "Failed to connect to Google AI");
+    }
   }
 }
 
