@@ -1,6 +1,5 @@
 
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -16,7 +15,6 @@ import VoiceFeedback from "./pages/VoiceFeedback";
 import StudyResources from "./pages/StudyResources";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import ChatbotAssistant from "@/components/ChatbotAssistant";
 import VoiceAIAssistant from "@/components/VoiceAIAssistant";
 
 const queryClient = new QueryClient();
@@ -26,7 +24,6 @@ const App = () => (
     <TooltipProvider>
       <AuthProvider>
         <Toaster />
-        <Sonner />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
