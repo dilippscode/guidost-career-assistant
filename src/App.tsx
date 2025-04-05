@@ -12,6 +12,7 @@ import Mentorship from "./pages/Mentorship";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
+import VoiceFeedback from "./pages/VoiceFeedback";
 import ChatbotAssistant from "@/components/ChatbotAssistant";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/career-compass" element={<CareerCompass />} />
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/mentorship" element={<Mentorship />} />
+            <Route path="/voice-feedback" element={<VoiceFeedback />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<NotFound />} />
