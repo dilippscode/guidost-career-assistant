@@ -6,7 +6,7 @@ import { saveOfflineFeedback, removeOfflineFeedback } from "@/utils/offlineStora
 import { VoiceFeedbackState, VoiceFeedbackActions, OfflineData } from "./types";
 
 export const useFeedbackGenerator = (
-  state: Pick<VoiceFeedbackState, "text" | "voice" | "networkStatus" | "audioElement">,
+  state: Pick<VoiceFeedbackState, "text" | "voice" | "networkStatus" | "audioElement" | "offlineFeedback">,
   actions: Pick<VoiceFeedbackActions, "setIsGenerating" | "setIsPlaying" | "setAudioElement" | "setFeedbackGenerated" | "setOfflineFeedback" | "setIsSyncing">
 ) => {
   const [isGenerating, setIsGenerating] = useState(false);

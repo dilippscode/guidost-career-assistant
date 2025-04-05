@@ -27,14 +27,13 @@ export const useVoiceFeedback = ({ initialText }: UseVoiceFeedbackProps): VoiceF
     togglePlayPause 
   } = useAudioPlayer();
 
+  // State for feedback generation
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [feedbackGenerated, setFeedbackGenerated] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+
   // Feedback generation
   const { 
-    isGenerating, 
-    setIsGenerating, 
-    feedbackGenerated, 
-    setFeedbackGenerated, 
-    isSyncing, 
-    setIsSyncing, 
     generateFeedback, 
     syncOfflineFeedback 
   } = useFeedbackGenerator(
