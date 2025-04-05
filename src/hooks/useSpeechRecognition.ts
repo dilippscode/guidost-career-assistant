@@ -1,5 +1,10 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { 
+  SpeechRecognition,
+  SpeechRecognitionEvent,
+  SpeechRecognitionErrorEvent
+} from '@/types/speech-recognition';
 
 interface UseSpeechRecognitionProps {
   onResult?: (text: string) => void;

@@ -63,7 +63,7 @@ interface SpeechRecognition extends EventTarget {
   stop(): void;
 }
 
-declare const SpeechRecognition: {
+declare var SpeechRecognition: {
   prototype: SpeechRecognition;
   new(): SpeechRecognition;
 };
@@ -75,4 +75,11 @@ declare global {
   }
 }
 
-export {};
+export {
+  SpeechRecognition,
+  SpeechRecognitionEvent,
+  SpeechRecognitionErrorEvent,
+  SpeechRecognitionResult,
+  SpeechRecognitionResultList,
+  SpeechRecognitionAlternative
+};
