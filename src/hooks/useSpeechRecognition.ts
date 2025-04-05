@@ -1,6 +1,5 @@
 
 import { useState, useEffect, useRef } from 'react';
-import '../types/speech-recognition.d.ts'; // Import the type definitions
 
 interface UseSpeechRecognitionProps {
   onResult?: (text: string) => void;
@@ -16,6 +15,7 @@ export const useSpeechRecognition = ({
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [isSupported, setIsSupported] = useState(false);
+  const [availableModels, setAvailableModels] = useState<string[]>([]);
   
   // Define recognitionRef with the correct type
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -23,7 +23,7 @@ export const useSpeechRecognition = ({
   useEffect(() => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       const SpeechRecognitionConstructor = (window.SpeechRecognition || 
-                                           window.webkitSpeechRecognition) as SpeechRecognitionConstructor;
+                                           window.webkitSpeechRecognition) as typeof SpeechRecognitionConstructor;
       recognitionRef.current = new SpeechRecognitionConstructor();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
@@ -97,12 +97,29 @@ export const useSpeechRecognition = ({
     recognitionRef.current.stop();
   };
 
+  const listModels = () => {
+    // The Web Speech API doesn't provide a native way to list recognition models
+    // This is a mock implementation that returns common speech recognition services
+    const mockModels = [
+      'Chrome Web Speech API',
+      'Safari Web Speech API',
+      'Firefox Web Speech API',
+      'Microsoft Web Speech API'
+    ];
+    
+    setAvailableModels(mockModels);
+    console.log('Available speech recognition models:', mockModels);
+    return mockModels;
+  };
+
   return {
     isListening,
     transcript,
     startListening,
     stopListening,
-    isSupported
+    isSupported,
+    listModels,
+    availableModels
   };
 };
 
