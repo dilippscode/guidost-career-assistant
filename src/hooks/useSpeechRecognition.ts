@@ -17,12 +17,14 @@ export const useSpeechRecognition = ({
   const [transcript, setTranscript] = useState('');
   const [isSupported, setIsSupported] = useState(false);
   
+  // Define recognitionRef with the correct type
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
+      const SpeechRecognitionConstructor = (window.SpeechRecognition || 
+                                           window.webkitSpeechRecognition) as SpeechRecognitionConstructor;
+      recognitionRef.current = new SpeechRecognitionConstructor();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
       recognitionRef.current.lang = language;
