@@ -62,6 +62,9 @@ export const useVoiceAssistant = ({ speak }: UseVoiceAssistantProps = {}) => {
         } else if (/voice feedback|feedback/i.test(command)) {
           addMessage("Navigating to the Voice Feedback page...", "assistant");
           navigate("/voice-feedback");
+        } else if (/study|notes|resources/i.test(command)) {
+          addMessage("Navigating to the Study Resources page...", "assistant");
+          navigate("/study-resources");
         } else if (/login|sign in/i.test(command)) {
           addMessage("Navigating to the login page...", "assistant");
           navigate("/login");
@@ -70,6 +73,22 @@ export const useVoiceAssistant = ({ speak }: UseVoiceAssistantProps = {}) => {
           navigate("/signup");
         } else {
           addMessage("I'm not sure where you want to go. Could you be more specific?", "assistant");
+        }
+      }
+      // Handle search commands
+      else if (/search for|find|look for|research/i.test(command)) {
+        const searchTerm = command.replace(/search for|find|look for|research/i, "").trim();
+        if (searchTerm) {
+          if (/notes|study|resources/i.test(command)) {
+            addMessage(`Taking you to Study Resources to search for "${searchTerm}"...`, "assistant");
+            navigate("/study-resources", { state: { searchQuery: searchTerm } });
+          } else {
+            addMessage(`Searching for "${searchTerm}"...`, "assistant");
+            // Here you would integrate with your search functionality
+            toast.info(`Search functionality for "${searchTerm}" would be triggered here`);
+          }
+        } else {
+          addMessage("What would you like to search for?", "assistant");
         }
       }
       // Handle information requests
@@ -84,19 +103,10 @@ export const useVoiceAssistant = ({ speak }: UseVoiceAssistantProps = {}) => {
           addMessage("Roadmaps are structured learning paths that guide you through the skills and knowledge you need to achieve specific career goals. They provide step-by-step guidance for your learning journey.", "assistant");
         } else if (/voice feedback/i.test(command)) {
           addMessage("Voice Feedback is a tool that converts text feedback into natural-sounding voice, making it more engaging and accessible for students, especially those with reading difficulties.", "assistant");
+        } else if (/study resources|study notes/i.test(command)) {
+          addMessage("Study Resources is a feature that allows you to search for and create notes on various subjects. You can save important information from web searches for easy reference during your studies.", "assistant");
         } else {
-          addMessage("I don't have specific information about that topic. Could you ask about GuiDost, Career Compass, Mentorship, or Roadmaps?", "assistant");
-        }
-      }
-      // Handle search commands
-      else if (/search for|find|look for/i.test(command)) {
-        const searchTerm = command.replace(/search for|find|look for/i, "").trim();
-        if (searchTerm) {
-          addMessage(`Searching for "${searchTerm}"...`, "assistant");
-          // Here you would integrate with your search functionality
-          toast.info(`Search functionality for "${searchTerm}" would be triggered here`);
-        } else {
-          addMessage("What would you like to search for?", "assistant");
+          addMessage("I don't have specific information about that topic. Could you ask about GuiDost, Career Compass, Mentorship, Roadmaps, or Study Resources?", "assistant");
         }
       }
       // Handle clear history command
@@ -104,9 +114,14 @@ export const useVoiceAssistant = ({ speak }: UseVoiceAssistantProps = {}) => {
         clearHistory();
         addMessage("Command history cleared.", "assistant");
       }
+      // Handle note creation commands
+      else if (/create note|add note|save note|new note/i.test(command)) {
+        addMessage("I'll help you create a new note. Navigating to the Study Resources page...", "assistant");
+        navigate("/study-resources", { state: { activeTab: "create" } });
+      }
       // Default response for unrecognized commands
       else {
-        addMessage("I'm not sure how to help with that. Try asking about GuiDost features or use navigation commands like 'Go to mentorship'.", "assistant");
+        addMessage("I'm not sure how to help with that. Try asking about GuiDost features or use navigation commands like 'Go to mentorship' or 'Search for study notes'.", "assistant");
       }
     } catch (error) {
       console.error("Error processing command:", error);

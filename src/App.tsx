@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import VoiceFeedback from "./pages/VoiceFeedback";
+import StudyResources from "./pages/StudyResources";
 import ChatbotAssistant from "@/components/ChatbotAssistant";
 import VoiceAIAssistant from "@/components/VoiceAIAssistant";
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/roadmaps" element={<Roadmaps />} />
             <Route path="/mentorship" element={<Mentorship />} />
             <Route path="/voice-feedback" element={<VoiceFeedback />} />
+            <Route path="/study-resources" element={<StudyResources />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<NotFound />} />
