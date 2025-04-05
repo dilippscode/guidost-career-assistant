@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
+import '../types/speech-recognition.d.ts'; // Import the type definitions
 
 interface UseSpeechRecognitionProps {
   onResult?: (text: string) => void;
