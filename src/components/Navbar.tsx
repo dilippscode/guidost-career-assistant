@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -69,16 +68,19 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            {/* Search button */}
+            {/* Search button with keyboard shortcut hint */}
             <Button 
-              variant="ghost" 
-              size="icon" 
+              variant="outline" 
+              size="sm" 
               onClick={() => setSearchOpen(true)} 
-              className="text-gray-700"
+              className="text-gray-700 flex items-center gap-2"
               aria-label="Search"
             >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
+              <Search className="h-4 w-4" />
+              <span>Search</span>
+              <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                <span className="text-xs">⌘</span>K
+              </kbd>
             </Button>
             
             {user ? (
@@ -129,6 +131,7 @@ const Navbar = () => {
             >
               <Search className="h-5 w-5" />
             </Button>
+            
             <button onClick={toggleMenu} className="text-gray-700 hover:text-guidost-600">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -212,7 +215,7 @@ const Navbar = () => {
         )}
       </div>
       
-      {/* Global search component */}
+      {/* Global search component with state passed down */}
       <SearchCommand />
     </nav>
   );
