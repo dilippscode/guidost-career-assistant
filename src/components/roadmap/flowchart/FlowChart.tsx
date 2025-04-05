@@ -12,13 +12,16 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { getInitialNodesAndEdges } from "./NodeData";
+import { FlowchartColorTheme, flowchartThemes } from "./FlowchartThemes";
 
 interface FlowChartProps {
   roadmapId: string;
+  theme: string;
 }
 
-const FlowChart: React.FC<FlowChartProps> = ({ roadmapId }) => {
-  const { nodes: initialNodes, edges: initialEdges } = getInitialNodesAndEdges(roadmapId);
+const FlowChart: React.FC<FlowChartProps> = ({ roadmapId, theme }) => {
+  const currentTheme: FlowchartColorTheme = flowchartThemes[theme] || flowchartThemes.default;
+  const { nodes: initialNodes, edges: initialEdges } = getInitialNodesAndEdges(roadmapId, currentTheme);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
@@ -40,23 +43,23 @@ const FlowChart: React.FC<FlowChartProps> = ({ roadmapId }) => {
       >
         <Controls />
         <MiniMap />
-        <Background color="#f8f8f8" gap={16} />
+        <Background color={currentTheme.backgroundColor === "#121212" ? "#333" : "#f8f8f8"} gap={16} />
         <Panel position="top-left" className="bg-white p-2 rounded shadow-sm">
           <div className="text-xs text-gray-500">
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-3 h-3 rounded-full bg-d6e4ff"></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: currentTheme.beginnerBackground }}></div>
               <span>Beginner</span>
             </div>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-3 h-3 rounded-full bg-fff7d6"></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: currentTheme.intermediateBackground }}></div>
               <span>Intermediate</span>
             </div>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-3 h-3 rounded-full bg-ffd6e0"></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: currentTheme.advancedBackground }}></div>
               <span>Advanced</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-d6ffef"></div>
+              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: currentTheme.expertBackground }}></div>
               <span>Expert</span>
             </div>
           </div>

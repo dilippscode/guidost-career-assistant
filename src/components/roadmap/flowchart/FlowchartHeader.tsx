@@ -9,8 +9,8 @@ interface FlowchartHeaderProps {
 
 const FlowchartHeader: React.FC<FlowchartHeaderProps> = ({ viewType }) => {
   return (
-    <div className="flex justify-between items-center border-b p-3">
-      <h3 className="text-lg font-medium">Roadmap Visualization</h3>
+    <div className="p-3">
+      <h3 className="text-lg font-medium mb-2">Roadmap Visualization</h3>
       <TabsList>
         <TabsTrigger value="flow" className="flex items-center gap-1">
           <LayoutList size={16} />

@@ -5,6 +5,7 @@ import { ChartBar, ChartLine, ChartPie } from "lucide-react";
 import FlowChart from "./FlowChart";
 import ChartPlaceholder from "./ChartPlaceholder";
 import FlowchartHeader from "./FlowchartHeader";
+import ThemeSelector from "./ThemeSelector";
 
 interface RoadmapFlowchartProps {
   roadmapId: string;
@@ -12,14 +13,25 @@ interface RoadmapFlowchartProps {
 
 const RoadmapFlowchart: React.FC<RoadmapFlowchartProps> = ({ roadmapId }) => {
   const [viewType, setViewType] = useState("flow");
+  const [colorTheme, setColorTheme] = useState("default");
 
   return (
     <div className="w-full bg-white rounded-xl overflow-hidden border border-gray-100">
       <Tabs value={viewType} onValueChange={setViewType} className="w-full">
-        <FlowchartHeader viewType={viewType} />
+        <div className="flex justify-between items-center border-b">
+          <FlowchartHeader viewType={viewType} />
+          {viewType === "flow" && (
+            <div className="pr-4">
+              <ThemeSelector 
+                currentTheme={colorTheme} 
+                onThemeChange={setColorTheme} 
+              />
+            </div>
+          )}
+        </div>
 
         <TabsContent value="flow" className="m-0">
-          <FlowChart roadmapId={roadmapId} />
+          <FlowChart roadmapId={roadmapId} theme={colorTheme} />
         </TabsContent>
 
         <TabsContent value="chart">

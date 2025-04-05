@@ -1,12 +1,13 @@
 
 import { MarkerType } from "@xyflow/react";
+import { FlowchartColorTheme, flowchartThemes } from "./FlowchartThemes";
 
 export type RoadmapNodes = {
   nodes: any[];
   edges: any[];
 }
 
-export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
+export const getInitialNodesAndEdges = (id: string, theme: FlowchartColorTheme = flowchartThemes.default): RoadmapNodes => {
   switch (id) {
     case "web-development":
       return {
@@ -17,9 +18,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "HTML & CSS Fundamentals" },
             position: { x: 250, y: 0 },
             style: {
-              background: "#d6e4ff",
-              color: "#004080",
-              border: "1px solid #b8cffa",
+              background: theme.beginnerBackground,
+              color: theme.beginnerText,
+              border: `1px solid ${theme.beginnerBorder}`,
               width: 180,
             },
           },
@@ -28,9 +29,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "JavaScript Basics" },
             position: { x: 250, y: 100 },
             style: {
-              background: "#d6e4ff",
-              color: "#004080",
-              border: "1px solid #b8cffa",
+              background: theme.beginnerBackground,
+              color: theme.beginnerText,
+              border: `1px solid ${theme.beginnerBorder}`,
               width: 180,
             },
           },
@@ -39,9 +40,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Frontend Frameworks" },
             position: { x: 250, y: 200 },
             style: {
-              background: "#fff7d6",
-              color: "#806200",
-              border: "1px solid #faebb8",
+              background: theme.intermediateBackground,
+              color: theme.intermediateText,
+              border: `1px solid ${theme.intermediateBorder}`,
               width: 180,
             },
           },
@@ -50,9 +51,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Backend Basics" },
             position: { x: 100, y: 300 },
             style: {
-              background: "#fff7d6",
-              color: "#806200",
-              border: "1px solid #faebb8",
+              background: theme.intermediateBackground,
+              color: theme.intermediateText,
+              border: `1px solid ${theme.intermediateBorder}`,
               width: 180,
             },
           },
@@ -61,9 +62,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Advanced Frontend" },
             position: { x: 400, y: 300 },
             style: {
-              background: "#fff7d6",
-              color: "#806200",
-              border: "1px solid #faebb8",
+              background: theme.intermediateBackground,
+              color: theme.intermediateText,
+              border: `1px solid ${theme.intermediateBorder}`,
               width: 180,
             },
           },
@@ -72,9 +73,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Backend Frameworks" },
             position: { x: 100, y: 400 },
             style: {
-              background: "#ffd6e0",
-              color: "#800040",
-              border: "1px solid #fab8cd",
+              background: theme.advancedBackground,
+              color: theme.advancedText,
+              border: `1px solid ${theme.advancedBorder}`,
               width: 180,
             },
           },
@@ -83,9 +84,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "State Management" },
             position: { x: 400, y: 400 },
             style: {
-              background: "#ffd6e0",
-              color: "#800040",
-              border: "1px solid #fab8cd",
+              background: theme.advancedBackground,
+              color: theme.advancedText,
+              border: `1px solid ${theme.advancedBorder}`,
               width: 180,
             },
           },
@@ -95,9 +96,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Full Stack Development" },
             position: { x: 250, y: 500 },
             style: {
-              background: "#d6ffef",
-              color: "#008055",
-              border: "1px solid #b8fadf",
+              background: theme.expertBackground,
+              color: theme.expertText,
+              border: `1px solid ${theme.expertBorder}`,
               width: 180,
             },
           },
@@ -108,10 +109,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "1",
             target: "2",
             animated: true,
-            style: { stroke: "#b8cffa" },
+            style: { stroke: theme.edgeColor },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#b8cffa",
+              color: theme.edgeColor,
             },
           },
           {
@@ -119,10 +120,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "2",
             target: "3",
             animated: true,
-            style: { stroke: "#b8cffa" },
+            style: { stroke: theme.edgeColor },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#b8cffa",
+              color: theme.edgeColor,
             },
           },
           {
@@ -130,10 +131,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "3",
             target: "4",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -141,10 +142,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "3",
             target: "5",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -152,10 +153,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "4",
             target: "6",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -163,10 +164,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "5",
             target: "7",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -174,10 +175,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "6",
             target: "8",
             animated: true,
-            style: { stroke: "#fab8cd" },
+            style: { stroke: theme.advancedBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#fab8cd",
+              color: theme.advancedBorder,
             },
           },
           {
@@ -185,10 +186,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "7",
             target: "8",
             animated: true,
-            style: { stroke: "#fab8cd" },
+            style: { stroke: theme.advancedBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#fab8cd",
+              color: theme.advancedBorder,
             },
           },
         ],
@@ -202,9 +203,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Python Basics" },
             position: { x: 250, y: 0 },
             style: {
-              background: "#d6e4ff",
-              color: "#004080",
-              border: "1px solid #b8cffa",
+              background: theme.beginnerBackground,
+              color: theme.beginnerText,
+              border: `1px solid ${theme.beginnerBorder}`,
               width: 180,
             },
           },
@@ -213,9 +214,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Data Analysis Libraries" },
             position: { x: 250, y: 100 },
             style: {
-              background: "#d6e4ff",
-              color: "#004080",
-              border: "1px solid #b8cffa",
+              background: theme.beginnerBackground,
+              color: theme.beginnerText,
+              border: `1px solid ${theme.beginnerBorder}`,
               width: 180,
             },
           },
@@ -224,9 +225,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Data Visualization" },
             position: { x: 100, y: 200 },
             style: {
-              background: "#fff7d6",
-              color: "#806200",
-              border: "1px solid #faebb8",
+              background: theme.intermediateBackground,
+              color: theme.intermediateText,
+              border: `1px solid ${theme.intermediateBorder}`,
               width: 180,
             },
           },
@@ -235,9 +236,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Statistical Analysis" },
             position: { x: 400, y: 200 },
             style: {
-              background: "#fff7d6",
-              color: "#806200",
-              border: "1px solid #faebb8",
+              background: theme.intermediateBackground,
+              color: theme.intermediateText,
+              border: `1px solid ${theme.intermediateBorder}`,
               width: 180,
             },
           },
@@ -246,9 +247,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Machine Learning Basics" },
             position: { x: 250, y: 300 },
             style: {
-              background: "#ffd6e0",
-              color: "#800040",
-              border: "1px solid #fab8cd",
+              background: theme.advancedBackground,
+              color: theme.advancedText,
+              border: `1px solid ${theme.advancedBorder}`,
               width: 180,
             },
           },
@@ -257,9 +258,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Deep Learning" },
             position: { x: 250, y: 400 },
             style: {
-              background: "#ffd6e0",
-              color: "#800040",
-              border: "1px solid #fab8cd",
+              background: theme.advancedBackground,
+              color: theme.advancedText,
+              border: `1px solid ${theme.advancedBorder}`,
               width: 180,
             },
           },
@@ -269,9 +270,9 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             data: { label: "Advanced Data Science" },
             position: { x: 250, y: 500 },
             style: {
-              background: "#d6ffef",
-              color: "#008055",
-              border: "1px solid #b8fadf",
+              background: theme.expertBackground,
+              color: theme.expertText,
+              border: `1px solid ${theme.expertBorder}`,
               width: 180,
             },
           },
@@ -282,10 +283,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "1",
             target: "2",
             animated: true,
-            style: { stroke: "#b8cffa" },
+            style: { stroke: theme.edgeColor },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#b8cffa",
+              color: theme.edgeColor,
             },
           },
           {
@@ -293,10 +294,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "2",
             target: "3",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -304,10 +305,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "2",
             target: "4",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -315,10 +316,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "3",
             target: "5",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -326,10 +327,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "4",
             target: "5",
             animated: true,
-            style: { stroke: "#faebb8" },
+            style: { stroke: theme.intermediateBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#faebb8",
+              color: theme.intermediateBorder,
             },
           },
           {
@@ -337,10 +338,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "5",
             target: "6",
             animated: true,
-            style: { stroke: "#fab8cd" },
+            style: { stroke: theme.advancedBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#fab8cd",
+              color: theme.advancedBorder,
             },
           },
           {
@@ -348,10 +349,10 @@ export const getInitialNodesAndEdges = (id: string): RoadmapNodes => {
             source: "6",
             target: "7",
             animated: true,
-            style: { stroke: "#b8fadf" },
+            style: { stroke: theme.expertBorder },
             markerEnd: {
               type: MarkerType.ArrowClosed,
-              color: "#b8fadf",
+              color: theme.expertBorder,
             },
           },
         ],
