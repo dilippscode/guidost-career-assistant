@@ -2,71 +2,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
     --radius: 0.5rem;
+    --guidost-blue: 236 76% 50%;
+    --guidost-purple: 262 83% 58%;
+    --guidost-pink: 328 100% 54%;
+    --guidost-orange: 25 100% 60%;
+    --guidost-green: 142 76% 36%;
+    --mentor-teal: 187 100% 42%;
+    --mentor-blue: 215 100% 50%;
+    --mentor-purple: 264 100% 61%;
   }
-
+ 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
   }
 }
-
+ 
 @layer base {
   * {
     @apply border-border;
@@ -76,32 +67,91 @@
   }
 }
 
-/* Guidost specific styles */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-guidost-500 to-guidost-700;
+.floating-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.gradient-button {
-  @apply bg-gradient-to-r from-guidost-500 to-guidost-700 hover:from-guidost-600 hover:to-guidost-800 text-white transition-all duration-300;
+.floating-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .gradient-heading {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-guidost-600 to-guidost-800;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#4c63d2] to-[#bc3a80];
 }
 
-.floating-card {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+.gradient-button {
+  @apply bg-gradient-to-r from-[#4c63d2] to-[#bc3a80] hover:from-[#3b51bf] hover:to-[#a12c6a] text-white transition-all duration-300;
 }
 
-/* Roadmap Flow styles */
-.roadmap-node {
-  @apply bg-white border border-gray-200 rounded-md shadow-sm px-4 py-2 min-w-[120px] text-center;
+.text-guidost-600 {
+  color: hsl(var(--guidost-purple));
 }
 
-.roadmap-node-highlighted {
-  @apply bg-guidost-50 border-2 border-guidost-500 rounded-md shadow-md px-4 py-2 min-w-[120px] text-center;
+.text-guidost-800 {
+  color: hsl(var(--guidost-purple) / 0.8);
 }
 
-.roadmap-edge {
-  @apply stroke-2 stroke-gray-400;
+.bg-guidost-50 {
+  background-color: hsl(var(--guidost-purple) / 0.05);
+}
+
+.bg-guidost-100 {
+  background-color: hsl(var(--guidost-purple) / 0.1);
+}
+
+.bg-guidost-500 {
+  background-color: hsl(var(--guidost-purple));
+}
+
+.border-guidost-500 {
+  border-color: hsl(var(--guidost-purple));
+}
+
+.text-mentor-600 {
+  color: hsl(var(--mentor-purple));
+}
+
+.bg-mentor-600 {
+  background-color: hsl(var(--mentor-purple));
+}
+
+.bg-mentor-700 {
+  background-color: hsl(264 100% 51%);
+}
+
+/* ReactFlow Custom Styles */
+.bg-d6e4ff {
+  background-color: #d6e4ff;
+}
+
+.bg-fff7d6 {
+  background-color: #fff7d6;
+}
+
+.bg-ffd6e0 {
+  background-color: #ffd6e0;
+}
+
+.bg-d6ffef {
+  background-color: #d6ffef;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+
+.react-flow__controls {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.react-flow__attribution {
+  background: transparent;
+  color: #888;
+}
+
+.react-flow__minimap {
+  border-radius: 8px;
+  overflow: hidden;
 }

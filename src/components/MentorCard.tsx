@@ -1,8 +1,7 @@
 
 import React from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "lucide-react";
+import MentorScheduling from "./MentorScheduling";
 
 interface MentorCardProps {
   name: string;
@@ -72,10 +71,11 @@ const MentorCard: React.FC<MentorCardProps> = ({
           </div>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div className="text-mentor-600 font-medium">{sessionPrice} / 30 min session</div>
-            <Button className="flex items-center gap-2 bg-mentor-600 hover:bg-mentor-700">
-              <Calendar className="h-4 w-4" />
-              Schedule Session
-            </Button>
+            <MentorScheduling 
+              mentorName={name} 
+              mentorImage={image} 
+              sessionPrice={sessionPrice} 
+            />
           </div>
         </div>
       </div>
