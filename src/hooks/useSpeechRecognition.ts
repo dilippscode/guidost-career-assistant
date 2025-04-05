@@ -21,10 +21,10 @@ export const useSpeechRecognition = ({
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   useEffect(() => {
+    // Check for browser support
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const SpeechRecognitionConstructor = (window.SpeechRecognition || 
-                                           window.webkitSpeechRecognition) as typeof SpeechRecognitionConstructor;
-      recognitionRef.current = new SpeechRecognitionConstructor();
+      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognitionRef.current = new SpeechRecognitionAPI();
       recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = true;
       recognitionRef.current.lang = language;
