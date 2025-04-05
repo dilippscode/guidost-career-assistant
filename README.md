@@ -1,88 +1,124 @@
-Career Guidance Assistant
-Welcome to the Career Guidance Assistant repository! This project is designed to provide personalized career guidance to students, helping them make informed decisions about their academic and professional future.
 
-🚀 Project Overview
-The Career Guidance Assistant is an AI-powered platform that helps students navigate their career paths by providing personalized feedback, suggestions, and resources. It uses data-driven insights to recommend courses, internships, job opportunities, and more, based on individual student performance and goals.
+# Career Guidance Assistant
 
-Key Features:
-Personalized career advice tailored to student profiles.
+![Career Guidance Assistant Logo](public/placeholder.svg)
 
-AI-powered recommendations for courses, internships, and job opportunities.
+A powerful AI-powered platform designed to provide personalized career guidance to students, helping them make informed decisions about their academic and professional future.
 
-Integration with real-time data (job market trends, industry requirements).
+## 🚀 Features
 
-User-friendly interface for students to input their data and receive feedback.
+- **Personalized Career Advice:** Tailored recommendations based on student profiles, interests, and goals
+- **AI-powered Recommendations:** Get suggestions for courses, internships, and job opportunities
+- **Voice Feedback:** Receive audio feedback with multiple voice options and offline support
+- **Student Reflection Tools:** Guided reflection questions to help students process feedback
+- **Real-time Data Integration:** Stay current with job market trends and industry requirements
+- **Interactive Roadmaps:** Visual career path exploration tools
+- **Career Chatbot:** Get instant answers to career-related questions
 
-Continuous updates and recommendations based on user progress.
+## 💻 Tech Stack
 
-🔧 Technologies Used
-Frontend: React.js, HTML, CSS
+### Frontend
+- **React.js:** Modern UI framework for building the user interface
+- **TypeScript:** Static typing for safer code
+- **Tailwind CSS:** Utility-first CSS framework for styling
+- **Shadcn/UI:** Component library for consistent design
+- **Tanstack React Query:** Data fetching and state management
+- **Recharts:** Interactive charts for data visualization
+- **React Router:** Navigation and routing
 
-Backend: Node.js, Express.js
+### Backend
+- **Node.js & Express:** Server-side application framework
+- **Supabase:** Backend-as-a-Service for authentication and database
 
-Database: MongoDB
+### AI & ML
+- **TensorFlow:** Machine learning library for AI features
+- **Natural Language Processing (NLP):** For chatbot and text analysis
 
-AI & Machine Learning: TensorFlow, Natural Language Processing (NLP)
+### Deployment
+- **Heroku:** Cloud platform for hosting
+- **Docker:** Containerization for consistent deployment
 
-Deployment: Heroku, Docker
+## 📋 Getting Started
 
-💻 Installation Guide
-To run this project locally, follow these steps:
+### Prerequisites
+- Node.js (v18+)
+- npm or yarn
 
-1. Clone the Repository
-bash
-Copy
-Edit
-git clone https://github.com/your-username/career-guidance-assistant.git
-2. Navigate to the Project Directory
-bash
-Copy
-Edit
-cd career-guidance-assistant
-3. Install Dependencies
-Run the following command to install the required dependencies:
+### Installation
 
-bash
-Copy
-Edit
-npm install
-4. Set Up Environment Variables
-Create a .env file in the root directory and add the necessary environment variables (e.g., API keys, database URLs).
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/career-guidance-assistant.git
+   cd career-guidance-assistant
+   ```
 
-5. Start the Development Server
-bash
-Copy
-Edit
-npm start
-This will start the project on your local server at http://localhost:3000.
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-📜 Usage
-Student Registration: Students can create a profile with basic information (academic interests, skills, etc.).
+3. **Set up environment variables**
+   Create a `.env` file in the root directory with the following variables:
+   ```
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   VITE_AI_SERVICE_API_KEY=your_ai_service_api_key
+   ```
 
-Career Feedback: Once a student completes their profile, the system provides personalized career recommendations.
+4. **Start the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+   The application will be available at `http://localhost:5173`
 
-Tracking Progress: Users can track their progress, receive suggestions for further education or skill development, and explore career opportunities.
+## 🔧 Key Features in Detail
 
-⚙️ Contributing
-We welcome contributions! If you would like to contribute, please follow these steps:
+### Voice Feedback System
+Our voice feedback system allows users to:
+- Convert text to speech with AI-powered voices
+- Choose from multiple voice options
+- Work offline with automatic syncing when back online
+- Reflect on feedback received
 
-Fork the repository.
+### Career Chatbot
+An intelligent assistant that can:
+- Answer career-related questions
+- Provide guidance on education paths
+- Suggest skills to develop
+- Recommend resources for learning
 
-Create a new branch (git checkout -b feature-branch).
+### Roadmap Visualization
+Interactive career roadmaps that:
+- Show logical progression of career paths
+- Highlight skill requirements at each stage
+- Allow exploration of different branches and specializations
 
-Make your changes and commit (git commit -am 'Add new feature').
+## 🤝 Contributing
 
-Push to the branch (git push origin feature-branch).
+We welcome contributions! To contribute:
 
-Create a new pull request.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-📧 Contact
-For any questions or issues, please reach out to us at:
-Email: contact@career-guidance-assistant.com
-Website: career-guidance-assistant.com
+Please read our [Contributing Guidelines](CONTRIBUTING.md) for more details.
 
-📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 📄 License
 
-Contributions
-We are open to collaboration and suggestions for improvements. Feel free to open issues or submit pull requests!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+- **Email:** contact@career-guidance-assistant.com
+- **Website:** career-guidance-assistant.com
+- **GitHub Issues:** For bug reports and feature requests
+
+---
+
+Built with ❤️ for supporting student success in their career journeys.
