@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Volume2, Pause, Loader2 } from "lucide-react";
 import { aiService } from "@/services/aiService";
+import StudentReflection from "./StudentReflection";
 
 interface VoiceFeedbackProps {
   initialText?: string;
@@ -18,6 +19,8 @@ const VoiceFeedback: React.FC<VoiceFeedbackProps> = ({ initialText = "" }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [showReflection, setShowReflection] = useState(false);
+  const [feedbackGenerated, setFeedbackGenerated] = useState(false);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -48,7 +51,7 @@ const VoiceFeedback: React.FC<VoiceFeedbackProps> = ({ initialText = "" }) => {
         audioElement.currentTime = 0;
       }
 
-      const response = await fetch("https://your-project-id.supabase.co/functions/v1/text-to-speech", {
+      const response = await fetch("https://hyumytbxmbgveowhzhec.supabase.co/functions/v1/text-to-speech", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,6 +79,7 @@ const VoiceFeedback: React.FC<VoiceFeedbackProps> = ({ initialText = "" }) => {
       
       audio.play();
       setIsPlaying(true);
+      setFeedbackGenerated(true);
       toast.success("Voice feedback generated successfully");
     } catch (error) {
       console.error("Error generating voice feedback:", error);
@@ -97,80 +101,100 @@ const VoiceFeedback: React.FC<VoiceFeedbackProps> = ({ initialText = "" }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const handleReflect = () => {
+    setShowReflection(true);
+  };
+
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-xl font-semibold text-center">Voice Feedback Generator</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <Textarea
-            placeholder="Enter the feedback text you want to convert to speech..."
-            className="min-h-[150px]"
-            value={text}
-            onChange={handleTextChange}
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-2">Select Voice</label>
-          <Select value={voice} onValueChange={handleVoiceChange}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select voice" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="alloy">Alloy (Neutral)</SelectItem>
-              <SelectItem value="echo">Echo (Male)</SelectItem>
-              <SelectItem value="fable">Fable (Male)</SelectItem>
-              <SelectItem value="onyx">Onyx (Male)</SelectItem>
-              <SelectItem value="nova">Nova (Female)</SelectItem>
-              <SelectItem value="shimmer">Shimmer (Female)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <div className="flex gap-2">
-          <Button
-            variant="default"
-            className="gradient-button"
-            disabled={isGenerating || !text.trim()}
-            onClick={generateFeedback}
-          >
-            {isGenerating ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Volume2 className="mr-2 h-4 w-4" />
-                Generate Voice
-              </>
-            )}
-          </Button>
-          
-          {audioElement && (
+    <>
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-xl font-semibold text-center">Voice Feedback Generator</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <Textarea
+              placeholder="Enter the feedback text you want to convert to speech..."
+              className="min-h-[150px]"
+              value={text}
+              onChange={handleTextChange}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Select Voice</label>
+            <Select value={voice} onValueChange={handleVoiceChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select voice" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="alloy">Alloy (Neutral)</SelectItem>
+                <SelectItem value="echo">Echo (Male)</SelectItem>
+                <SelectItem value="fable">Fable (Male)</SelectItem>
+                <SelectItem value="onyx">Onyx (Male)</SelectItem>
+                <SelectItem value="nova">Nova (Female)</SelectItem>
+                <SelectItem value="shimmer">Shimmer (Female)</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <div className="flex gap-2">
             <Button
-              variant="outline"
-              onClick={togglePlayPause}
-              disabled={isGenerating}
+              variant="default"
+              className="gradient-button"
+              disabled={isGenerating || !text.trim()}
+              onClick={generateFeedback}
             >
-              {isPlaying ? (
+              {isGenerating ? (
                 <>
-                  <Pause className="mr-2 h-4 w-4" />
-                  Pause
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generating...
                 </>
               ) : (
                 <>
                   <Volume2 className="mr-2 h-4 w-4" />
-                  Play
+                  Generate Voice
                 </>
               )}
             </Button>
+            
+            {audioElement && (
+              <Button
+                variant="outline"
+                onClick={togglePlayPause}
+                disabled={isGenerating}
+              >
+                {isPlaying ? (
+                  <>
+                    <Pause className="mr-2 h-4 w-4" />
+                    Pause
+                  </>
+                ) : (
+                  <>
+                    <Volume2 className="mr-2 h-4 w-4" />
+                    Play
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+          
+          {feedbackGenerated && !showReflection && (
+            <Button 
+              variant="outline" 
+              onClick={handleReflect}
+              className="bg-mentor-50 text-mentor-700 hover:bg-mentor-100 border-mentor-200"
+            >
+              Reflect on Feedback
+            </Button>
           )}
-        </div>
-      </CardFooter>
-    </Card>
+        </CardFooter>
+      </Card>
+      
+      {showReflection && (
+        <StudentReflection feedbackText={text} />
+      )}
+    </>
   );
 };
 
