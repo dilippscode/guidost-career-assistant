@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, LogOut, User } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, User, Search } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   DropdownMenu, 
@@ -10,9 +10,11 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import SearchCommand from "@/components/SearchCommand";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const isProduction = window.location.hostname !== "localhost" && 
                        !window.location.hostname.includes(".lovable.app");
   const navigate = useNavigate();
@@ -67,6 +69,18 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
+            {/* Search button */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setSearchOpen(true)} 
+              className="text-gray-700"
+              aria-label="Search"
+            >
+              <Search className="h-5 w-5" />
+              <span className="sr-only">Search</span>
+            </Button>
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -105,7 +119,16 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-1">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={() => setSearchOpen(true)} 
+              className="text-gray-700"
+              aria-label="Search"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
             <button onClick={toggleMenu} className="text-gray-700 hover:text-guidost-600">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -188,6 +211,9 @@ const Navbar = () => {
           </div>
         )}
       </div>
+      
+      {/* Global search component */}
+      <SearchCommand />
     </nav>
   );
 };
