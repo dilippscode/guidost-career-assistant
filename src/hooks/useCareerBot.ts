@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useRef } from "react";
-import { aiService, ChatMessage } from "@/services/aiService";
+import { aiService, ChatMessage, AIProvider } from "@/services/aiService";
 import { toast } from "sonner";
 
 export const useCareerBot = () => {
@@ -16,6 +16,7 @@ export const useCareerBot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
   const [apiKey, setApiKey] = useState(aiService.getApiKey() || "");
+  const [provider, setProvider] = useState<AIProvider>(aiService.getProvider());
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,6 +27,9 @@ export const useCareerBot = () => {
     } else {
       setApiKey(savedApiKey);
     }
+    
+    // Set the provider from localStorage
+    setProvider(aiService.getProvider());
   }, []);
 
   useEffect(() => {
@@ -39,8 +43,9 @@ export const useCareerBot = () => {
     }
 
     aiService.setApiKey(apiKey.trim());
+    aiService.setProvider(provider);
     setApiKeyDialogOpen(false);
-    toast.success("API key saved successfully");
+    toast.success(`${provider === "openai" ? "OpenAI" : "Gemini"} API key saved successfully`);
   };
 
   const handleChangeApiKey = () => {
@@ -96,6 +101,8 @@ export const useCareerBot = () => {
     setApiKeyDialogOpen,
     apiKey,
     setApiKey,
+    provider,
+    setProvider,
     messagesEndRef,
     handleSaveApiKey,
     handleChangeApiKey,

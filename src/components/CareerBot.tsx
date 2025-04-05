@@ -18,6 +18,8 @@ const CareerBot: React.FC = () => {
     setApiKeyDialogOpen,
     apiKey,
     setApiKey,
+    provider,
+    setProvider,
     messagesEndRef,
     handleSaveApiKey,
     handleChangeApiKey,
@@ -27,7 +29,10 @@ const CareerBot: React.FC = () => {
 
   return (
     <div className="h-full flex flex-col bg-gray-50 rounded-xl border border-gray-200 overflow-hidden">
-      <ChatHeader handleChangeApiKey={handleChangeApiKey} />
+      <ChatHeader 
+        handleChangeApiKey={handleChangeApiKey} 
+        provider={provider}
+      />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
@@ -54,6 +59,8 @@ const CareerBot: React.FC = () => {
         onOpenChange={setApiKeyDialogOpen}
         apiKey={apiKey}
         setApiKey={setApiKey}
+        provider={provider}
+        setProvider={setProvider}
         handleSaveApiKey={handleSaveApiKey}
       />
     </div>
