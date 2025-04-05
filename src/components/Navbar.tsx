@@ -1,7 +1,8 @@
+
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, LogOut, User, Search } from "lucide-react";
+import { Menu, X, ChevronDown, LogOut, User, Search, Bot } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { 
   DropdownMenu, 
@@ -9,6 +10,12 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
 import SearchCommand from "@/components/SearchCommand";
 
 const Navbar = () => {
@@ -83,6 +90,25 @@ const Navbar = () => {
               </kbd>
             </Button>
             
+            {/* Voice Assistant Button */}
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-gray-700 flex items-center gap-2"
+                  >
+                    <Bot className="h-4 w-4" />
+                    <span className="hidden sm:inline">Assistant</span>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Voice AI Assistant</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -131,6 +157,23 @@ const Navbar = () => {
             >
               <Search className="h-5 w-5" />
             </Button>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="text-gray-700"
+                  >
+                    <Bot className="h-5 w-5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Voice AI Assistant</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
             <button onClick={toggleMenu} className="text-gray-700 hover:text-guidost-600">
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

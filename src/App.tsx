@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 import NotFound from "./pages/NotFound";
 import VoiceFeedback from "./pages/VoiceFeedback";
 import ChatbotAssistant from "@/components/ChatbotAssistant";
+import VoiceAIAssistant from "@/components/VoiceAIAssistant";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,7 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <ChatbotAssistant />
+          <VoiceAIAssistant />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
