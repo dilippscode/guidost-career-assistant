@@ -1,33 +1,49 @@
 
-interface SpeechRecognitionErrorEvent extends Event {
-  error: string;
-  message: string;
+interface SpeechRecognitionEventMap {
+  "audiostart": Event;
+  "audioend": Event;
+  "start": Event;
+  "end": Event;
+  "error": SpeechRecognitionErrorEvent;
+  "nomatch": SpeechRecognitionEvent;
+  "result": SpeechRecognitionEvent;
+  "soundstart": Event;
+  "soundend": Event;
+  "speechstart": Event;
+  "speechend": Event;
 }
 
 interface SpeechRecognitionEvent extends Event {
-  results: SpeechRecognitionResultList;
-  resultIndex: number;
-  interpretation: any;
+  readonly resultIndex: number;
+  readonly results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  readonly error: string;
+  readonly message: string;
 }
 
 interface SpeechRecognitionResultList {
+  readonly length: number;
+  item(index: number): SpeechRecognitionResult;
   [index: number]: SpeechRecognitionResult;
-  length: number;
 }
 
 interface SpeechRecognitionResult {
+  readonly length: number;
+  item(index: number): SpeechRecognitionAlternative;
   [index: number]: SpeechRecognitionAlternative;
-  length: number;
-  isFinal: boolean;
+  readonly isFinal: boolean;
 }
 
 interface SpeechRecognitionAlternative {
-  transcript: string;
-  confidence: number;
+  readonly transcript: string;
+  readonly confidence: number;
 }
 
 interface SpeechRecognition extends EventTarget {
   continuous: boolean;
+  grammars: any;
   interimResults: boolean;
   lang: string;
   maxAlternatives: number;
@@ -46,6 +62,11 @@ interface SpeechRecognition extends EventTarget {
   start(): void;
   stop(): void;
 }
+
+declare const SpeechRecognition: {
+  prototype: SpeechRecognition;
+  new(): SpeechRecognition;
+};
 
 declare global {
   interface Window {
