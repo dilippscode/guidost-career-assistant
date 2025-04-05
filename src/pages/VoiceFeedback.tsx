@@ -16,6 +16,7 @@ const VoiceFeedbackPage = () => {
           <Badge variant="outline" className="bg-guidost-50 text-guidost-600">Educational</Badge>
           <Badge variant="outline" className="bg-mentor-50 text-mentor-600">Accessibility</Badge>
           <Badge variant="outline" className="bg-gray-100">AI-Powered</Badge>
+          <Badge variant="outline" className="bg-purple-100 text-purple-600">Offline Support</Badge>
         </div>
       </div>
 
@@ -47,6 +48,14 @@ const VoiceFeedbackPage = () => {
           <div className="bg-white p-4 rounded-lg border shadow-sm">
             <h3 className="font-medium mb-2">Growth Mindset</h3>
             <p className="text-sm text-muted-foreground">Encourages students to view feedback as an opportunity for growth rather than criticism.</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg border shadow-sm">
+            <h3 className="font-medium mb-2">Offline Support</h3>
+            <p className="text-sm text-muted-foreground">Generate feedback in offline environments and sync it later when internet connectivity is restored.</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg border shadow-sm">
+            <h3 className="font-medium mb-2">Rural Accessibility</h3>
+            <p className="text-sm text-muted-foreground">Ideal for schools in rural areas with limited or intermittent internet connectivity.</p>
           </div>
         </div>
       </div>
