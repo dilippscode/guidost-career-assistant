@@ -119,6 +119,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Website:** career-guidance-assistant.com
 - **GitHub Issues:** For bug reports and feature requests
 
----
-
-Built with ❤️ for supporting student success in their career journeys.
